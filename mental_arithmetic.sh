@@ -25,9 +25,15 @@ function try_rand() {
     done
 }
 
+LOG_FILE_NAME=".metal_arithmetic.log"
+
+################################
+# log function
+# print log message into a file
+################################
 function log() {
     #printf "$*" | tee -a .metal_arithmetic.log
-    printf "$*\n" >> .metal_arithmetic.log
+    printf "$*\n" >> ${LOG_FILE_NAME}
 }
 
 function callAddSub() {
@@ -128,7 +134,7 @@ function _callNormal() {
     t=$(calTime $startTime $endTime)
     log "总共10题，正确${right}题, ${t}"
 
-    tail -n 12 .metal_arithmetic.log
+    tail -n 12 ${LOG_FILE_NAME}
 }
 
 function callNormal(){
