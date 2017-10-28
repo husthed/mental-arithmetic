@@ -40,8 +40,8 @@ function _doNormal() {
     oddeven=$((operator / 2 * 2)) 
 
     # for 125, only do multiply now
-    if [ $operand1 -eq 125 ]
-    then
+    f=$(echo "${operand1} == 125"|bc)
+    if [ ${f} == 1 ]; then
         oddeven=$operator
     fi
 
