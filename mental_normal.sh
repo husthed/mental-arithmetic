@@ -1,4 +1,59 @@
 ##############################################
+# real work for calculate power
+##############################################
+function _doPower() {
+    length=${#_arrayPower[@]}
+    pos=$(($(rand 1 ${length})-1))
+    operand1=${_arrayPower[${pos}]}
+    lastPos=$((${length}-1))
+    while [ ${pos} -lt ${lastPos} ]
+    do
+        _arrayPower[${pos}]=${_arrayPower[$((${pos}+1))]}
+        pos=$((${pos}+1))
+    done
+    unset _arrayPower[${lastPos}]
+
+    result=$(echo "${operand1}*${operand1}"|bc)
+    operator=$(($(rand 1 999)))
+    oddeven=$((operator / 2 * 2)) 
+
+    if [ $operator -eq $oddeven ] 
+    then
+        callCalc $1 ${operand1} ${operand1} "*"
+    else
+        callCalc $1 ${operand1} ${operand1} "*"
+        #callCalc $1 ${result} ${operand1} "/"
+    fi
+
+    return $?
+}
+
+##############################################
+# interface to do n*n
+##############################################
+function _callPower() {
+    log "$(date)"
+
+    c=0
+    right=0
+    startTime=$(date +%s)
+    while [ $c -lt 10 ]
+    do
+        c=$(($c+1))
+        _doPower $c
+        right=$(($?+$right))
+        #echo $r $right
+    done
+
+    endTime=$(date +%s)
+    t=$(calTime $startTime $endTime)
+    log "总共10题，正确${right}题, ${t}"
+
+    #tail -n 12 ${LOG_FILE_NAME}
+    echo -e ${LOG_BUFFER} | tee -a ${LOG_FILE_NAME}
+}
+
+##############################################
 # real work for calculate 3.14
 ##############################################
 function _doPI() {
@@ -157,14 +212,15 @@ function _callNormal() {
 # 3 3.14的乘除法
 # 4 综合: 25/125/3.14的乘除法
 #####################################
-function callNormal(){
+function callNormal() {
     printf "\t\t常规计算\n"
     printf "\t1 25\n"
     printf "\t2 125\n"
     printf "\t3 3.14\n"
-    printf "\t4 综合\n"
+    printf "\t4 n*n\n"
+    printf "\t5 综合\n"
 
-    read -p "请输入选项1，2, 3或者4: " index
+    read -p "请输入选项1，2, 3, 4或者5: " index
 
     if [ $index == "1" ] 
     then
@@ -176,6 +232,9 @@ function callNormal(){
     then
         _callPI
     elif [ $index == "4" ] 
+    then
+        _callPower
+    elif [ $index == "5" ] 
     then
         _callNormal
     else

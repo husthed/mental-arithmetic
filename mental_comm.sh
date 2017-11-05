@@ -7,6 +7,7 @@ LOG_BUFFER=""
 _arrayBased10=(1 2 3 4 5 6 7 8 9 10)
 _arraySingleDigital=(1 2 3 4 5 6 7 8 9)
 _arrayPI=(2 3 4 5 6 7 8 9 16 25 36)
+_arrayPower=(2 3 4 5 6 7 8 9 11 12 13 14 15 16 17 18 19)
   
 ############################
 # generate random number
