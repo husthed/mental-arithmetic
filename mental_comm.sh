@@ -6,6 +6,7 @@ LOG_BUFFER=""
 # array which has 10 elements from 1 to 10
 _arrayBased10=(1 2 3 4 5 6 7 8 9 10)
 _arraySingleDigital=(1 2 3 4 5 6 7 8 9)
+_arrayPI=(2 3 4 5 6 7 8 9 16 25 36)
   
 ############################
 # generate random number

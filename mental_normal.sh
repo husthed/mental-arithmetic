@@ -1,4 +1,60 @@
 ##############################################
+# real work for calculate 3.14
+##############################################
+function _doPI() {
+    operand1=3.14
+
+    length=${#_arrayPI[@]}
+    pos=$(($(rand 1 ${length})-1))
+    operand2=${_arrayPI[${pos}]}
+    lastPos=$((${length}-1))
+    while [ ${pos} -lt ${lastPos} ]
+    do
+        _arrayPI[${pos}]=${_arrayPI[$((${pos}+1))]}
+        pos=$((${pos}+1))
+    done
+    unset _arrayPI[${lastPos}]
+
+    result=$(echo "${operand1}*${operand2}"|bc)
+    operator=$(($(rand 1 999)))
+    oddeven=$((operator / 2 * 2)) 
+
+    if [ $operator -eq $oddeven ] 
+    then
+        callCalc $1 ${operand1} ${operand2} "*"
+    else
+        callCalc $1 ${result} ${operand1} "/"
+    fi
+
+    return $?
+}
+
+##############################################
+# interface to do 3.14 multi/div
+##############################################
+function _callPI() {
+    log "$(date)"
+
+    c=0
+    right=0
+    startTime=$(date +%s)
+    while [ $c -lt 10 ]
+    do
+        c=$(($c+1))
+        _doPI $c
+        right=$(($?+$right))
+        #echo $r $right
+    done
+
+    endTime=$(date +%s)
+    t=$(calTime $startTime $endTime)
+    log "总共10题，正确${right}题, ${t}"
+
+    #tail -n 12 ${LOG_FILE_NAME}
+    echo -e ${LOG_BUFFER} | tee -a ${LOG_FILE_NAME}
+}
+
+##############################################
 # real work for calculate 25/125/3.14
 ##############################################
 function _doNormal() {
@@ -92,6 +148,7 @@ function _callNormal() {
     echo -e ${LOG_BUFFER} | tee -a ${LOG_FILE_NAME}
 }
 
+
 #####################################
 # main entry for 常规练习
 # 支持
@@ -117,7 +174,7 @@ function callNormal(){
         _callNormal 125
     elif [ $index == "3" ] 
     then
-        _callNormal 3.14
+        _callPI
     elif [ $index == "4" ] 
     then
         _callNormal
