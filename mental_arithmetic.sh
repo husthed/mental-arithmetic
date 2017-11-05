@@ -16,7 +16,7 @@ function _main(){
         printf "\t4 速算\n"
         printf "\t5 退出\n"
 
-        read -p "请输入选项1，2, 3或者4: " index
+        read -p "请输入选项1，2, 3, 4或者5: " index
 
         if [ $index == "1" ] 
         then
