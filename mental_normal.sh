@@ -220,6 +220,10 @@ function callNormal() {
     printf "\t4 n*n\n"
     printf "\t5 综合\n"
 
+    _arrayBased10=(1 2 3 4 5 6 7 8 9 10)
+    _arrayPI=(2 3 4 5 6 7 8 9 16 25 36)
+    _arrayPower=(9 11 12 13 14 15 16 17 18 19)
+
     read -p "请输入选项1，2, 3, 4或者5: " index
 
     if [ $index == "1" ] 

@@ -113,6 +113,8 @@ function callMulDiv() {
     printf "\t3 三位数乘除法\n"
     printf "\t4 综合\n"
 
+    _arrayBased10=(1 2 3 4 5 6 7 8 9 10)
+
     read -p "请输入选项1，2, 3或者4: " index
 
     if [ $index == "1" ] 

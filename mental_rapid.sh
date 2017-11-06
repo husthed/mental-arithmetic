@@ -144,6 +144,8 @@ function callRapid() {
     printf "\t6 尾相同,头互补\n"
     printf "\t7 互补数乘叠数\n"
 
+    _arraySingleDigital=(1 2 3 4 5 6 7 8 9)
+  
     read -p "请输入选项1，2, 3, 4, 5, 6或者7: " index
 
     if [ $index == "1" ] 

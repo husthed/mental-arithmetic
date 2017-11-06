@@ -16,6 +16,8 @@ function _main(){
         printf "\t4 速算\n"
         printf "\t5 退出\n"
 
+        LOG_BUFFER=""
+
         read -p "请输入选项1，2, 3, 4或者5: " index
 
         if [ $index == "1" ] 
@@ -30,6 +32,9 @@ function _main(){
         elif [ $index == "4" ] 
         then
             callRapid
+        elif [ $index == "5" ] 
+        then
+            exit
         else
             echo "选项未知，退出程序"
             exit
