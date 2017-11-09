@@ -20,6 +20,8 @@ function _main(){
 
         read -p "请输入选项1，2, 3, 4或者5: " index
 
+        clear
+
         if [ $index == "1" ] 
         then
             callAddSub
