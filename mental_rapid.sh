@@ -24,7 +24,13 @@ function _callUnitDigit() {
         #done
         #unset _arraySingleDigital[${lastPos}]
 
-        callCalc $c $((operand1 * 10 + $1)) $((operand2 * 10 + $1)) "*"
+        isSame=$3
+        if [ $isSame == 0 ]
+        then
+            callCalc $c $((operand1 * 10 + $1)) $((operand2 * 10 + $1)) "*"
+        else
+            callCalc $c $((operand1 * 10 + $1)) $((operand1 * 10 + $1)) "*"
+        fi
         right=$(($?+$right))
     done
 
@@ -136,13 +142,10 @@ function _callSupplement() {
 #####################################
 function callRapid() {
     printf "\t\t速算\n"
-    printf "\t1 个位数为1\n"
-    printf "\t2 十位数为1\n"
-    printf "\t3 个位数为9\n"
-    printf "\t4 十位数为9\n"
-    printf "\t5 头相同,尾互补\n"
-    printf "\t6 尾相同,头互补\n"
-    printf "\t7 互补数乘叠数\n"
+    printf "\t1 个位数为1\t2 十位数为1\n"
+    printf "\t3 个位数为9\t4 十位数为9\n"
+    printf "\t5 头相同,尾互补\t6 尾相同,头互补\n"
+    printf "\t7 互补数乘叠数\t8 x5*x5\n"
 
     _arraySingleDigital=(1 2 3 4 5 6 7 8 9)
   
@@ -150,13 +153,13 @@ function callRapid() {
 
     if [ $index == "1" ] 
     then
-        _callUnitDigit 1 "x1*y1的速算口诀:\n头乘头，头加头，尾是1（头加头如果超过10要进位）"
+        _callUnitDigit 1 "x1*y1的速算口诀:\n头乘头，头加头，尾是1（头加头如果超过10要进位）" 0
     elif [ $index == "2" ] 
     then
         _callTenDigit 10 "1x*1y的速算口诀:\n头是1，尾加尾，尾乘尾（超过10要进位）"
     elif [ $index == "3" ] 
     then
-        _callUnitDigit 9 "x9*y9的速算口诀:\n头数各加1 ，相乘再乘10，减去相加数，最后再放1"
+        _callUnitDigit 9 "x9*y9的速算口诀:\n头数各加1 ，相乘再乘10，减去相加数，最后再放1" 0
     elif [ $index == "4" ] 
     then
         _callTenDigit 90 "9x*9y的速算口诀:\n\t方法1:尾数相加再加80作为头,100减大家，结果相互乘,占两位.\n\t方法2:100减前数，再被后数减。100减大家，结果相互乘，占2位"
@@ -169,6 +172,9 @@ function callRapid() {
     elif [ $index == "7" ] 
     then
         _callSupplement 2 "互补数乘叠数速算口诀:\n头加1再乘头，尾乘尾占2位."
+    elif [ $index == "8" ] 
+    then
+        _callUnitDigit 5 "x5*x5速算公式:\nx5*x5=(x+1)*x*100 + 25(即后两位为25,高位为x与x+1的乘积." 1
     else
         echo "选项未知，退出程序"
         exit
