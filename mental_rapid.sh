@@ -173,7 +173,7 @@ function callRapid() {
     printf "\t3 个位数为9\t4 十位数为9\n"
     printf "\t5 头相同,尾互补\t6 尾相同,头互补\n"
     printf "\t7 互补数乘叠数\t8 xy*99\n"
-    printf "\t9 10x*10y\t10 xy*叠数??????\n"
+    printf "\t9 10x*10y\n"
 
     _arraySingleDigital=(1 2 3 4 5 6 7 8 9)
   
@@ -181,35 +181,31 @@ function callRapid() {
 
     if [ $index == "1" ] 
     then
-        _callUnitDigit 1 "x1*y1的速算口诀:\n头乘头，头加头，尾是1（头加头如果超过10要进位）"
+        _callUnitDigit 1 "x1*y1的速算口诀:\n头乘头，头加头，尾乘尾（头加头如果超过10要进位）"
     elif [ $index == "2" ] 
     then
-        _callTenDigit 10 "1x*1y的速算口诀:\n头是1，尾加尾，尾乘尾（超过10要进位）"
+        _callTenDigit 10 "1x*1y的速算口诀:\n头乘头，尾加尾，尾乘尾（超过10要进位）"
     elif [ $index == "3" ] 
     then
-        _callUnitDigit 9 "x9*y9的速算口诀:\n头数各加1 ，相乘再乘10，减去相加数，最后再放1"
+        _callUnitDigit 9 "x9*y9的速算口诀:\n(x+1)*(y+1)*10 - (x+1+y+1), 尾数为1."
     elif [ $index == "4" ] 
     then
-        _callTenDigit 90 "9x*9y的速算口诀:\n\t方法1:尾数相加再加80作为头,100减大家，结果相互乘,占两位.\n\t方法2:100减前数，再被后数减。100减大家，结果相互乘，占2位"
+        _callTenDigit 90 "9x*9y的速算口诀:\n一个数减去另一个数的补数,两个数的补数相乘占2位."
     elif [ $index == "5" ] 
     then
-        _callSupplement 0 "头相同,尾互补速算口诀:\n头乘头加1，尾乘尾占2位."
+        _callSupplement 0 "头相同,尾互补速算口诀:\n头*(头+1)，尾*尾占2位."
     elif [ $index == "6" ] 
     then
-        _callSupplement 1 "尾相同,头互补速算口诀:\n头乘头加尾，尾乘尾占2位."
+        _callSupplement 1 "尾相同,头互补速算口诀:\n头*头+尾，尾*尾占2位."
     elif [ $index == "7" ] 
     then
-        _callSupplement 2 "互补数乘叠数速算口诀:\n头加1再乘头，尾乘尾占2位."
+        _callSupplement 2 "互补数乘叠数速算口诀:\n(头+1)*头，尾*尾占2位."
     elif [ $index == "8" ] 
     then
-        _callRandom 99 "xy*99速算公式:\nxy*99=(xy-1)*100+(100-xy)=xy*100-xy."
+        _callRandom 99 "xy*99速算公式:\nxy*99=xy-1, 100-xy."
     elif [ $index == "9" ] 
     then
-        _callTenDigit 100 "10x*10y速算公式:\n10x*10y=(10x+y)*100+(x*y)."
-    elif [ $index == "10" ] 
-    then
-        #_callRandom  "xy*叠数:\n"
-        echo "Nothing to do"
+        _callTenDigit 100 "10x*10y速算公式:\n10x*10y: 第一个数+第二个数的个位数,个位数*个位数占2位."
     else
         echo "选项未知，退出程序"
         exit
